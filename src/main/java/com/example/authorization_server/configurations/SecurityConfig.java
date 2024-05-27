@@ -1,7 +1,10 @@
 package com.example.authorization_server.configurations;
 
+import com.example.authorization_server.entyties.UserM;
+import com.example.authorization_server.repositories.UserRepository;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.
         HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.
@@ -10,8 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import tacos.authorization.users.UserRepository;
 @EnableWebSecurity
+@Configuration
 public class SecurityConfig {
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http)
@@ -37,9 +40,9 @@ public class SecurityConfig {
             UserRepository repo, PasswordEncoder encoder) {
         return args -> {
             repo.save(
-                    new User("habuma", encoder.encode("password"), "ROLE_ADMIN"));
+                    new UserM("habuma", encoder.encode("password"), "ROLE_ADMIN"));
             repo.save(
-                    new User("tacochef", encoder.encode("password"), "ROLE_ADMIN"));
+                    new UserM("tacochef", encoder.encode("password"), "ROLE_ADMIN"));
         };
     }
 }
